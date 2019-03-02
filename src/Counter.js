@@ -45,7 +45,6 @@ const Counter = () => {
 
   useEffect(() => {
     mounted = true;
-    document.title = `You have clicked ${count} times.`;
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('online', handleOnlineStatus);
     window.addEventListener('offline', handleOfflineStatus);
@@ -60,6 +59,10 @@ const Counter = () => {
       navigator.geolocation.clearWatch(watchId);
       mounted = false;
     };
+  }, []);
+
+  useEffect(() => {
+    document.title = `You have clicked ${count} times.`;
   }, [count]);
 
   const incrementCount = () => {
