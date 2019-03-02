@@ -2,16 +2,25 @@ import React, { useState, useEffect } from 'react';
 import styles from './styles';
 
 const Counter = () => {
+  const initialLocation = {
+    latitude: null,
+    longitude: null,
+    speed: null,
+  };
   const [count, setCount] = useState(0);
   const [isOn, setIsOn] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: null, y: null });
   const [amIOnline, setOnlineStatus] = useState(navigator.onLine);
+  const [location, setLocation] = useState(initialLocation);
+  let mounted = false;
 
   const handleMouseMove = (event) => {
-    setMousePosition({
-      x: event.pageX,
-      y: event.pageY,
-    });
+    if (mounted) {
+      setMousePosition({
+        x: event.pageX,
+        y: event.pageY,
+      });
+    }
   };
 
   const handleOnlineStatus = () => {
@@ -22,17 +31,28 @@ const Counter = () => {
     setOnlineStatus(false);
   };
 
+  const handleGeolocation = (position) => {
+    setLocation({
+      latitude: position.coords.latitude,
+      longitude: position.coords.longitude,
+      speed: position.coords.speed,
+    });
+  };
+
   useEffect(() => {
+    mounted = true;
     document.title = `You have clicked ${count} times.`;
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('online', handleOnlineStatus);
     window.addEventListener('offline', handleOfflineStatus);
+    navigator.geolocation.getCurrentPosition(handleGeolocation);
 
     // clean up function
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('online', handleOnlineStatus);
       window.removeEventListener('offline', handleOfflineStatus);
+      mounted = false;
     };
   }, [count]);
 
@@ -64,6 +84,9 @@ const Counter = () => {
 
       <h2>Am I Online?</h2>
       <strong>{amIOnline ? 'Yes!' : 'Nope.'}</strong>
+
+      <h2>Where Am I?</h2>
+      <p>I am at {location.latitude || 'no latitude'}, {location.longitude || 'no longitude'}, traveling at {location.speed || 'no speed!'}</p>
     </>
   );
 };
