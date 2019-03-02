@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import styles from "./styles";
+import React, { useState, useEffect } from 'react';
+import styles from './styles';
 
 const Counter = () => {
   const [count, setCount] = useState(0);
   const [isOn, setIsOn] = useState(false);
 
   const incrementCount = () => {
-      setCount(prevCount => prevCount + 1);
-  }
+    setCount(prevCount => prevCount + 1);
+  };
 
   const toggleLight = () => {
     setIsOn(prevIsOn => !prevIsOn);
@@ -28,6 +28,6 @@ const Counter = () => {
       />
     </>
   );
-}
+};
 
 export default Counter;
