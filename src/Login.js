@@ -6,6 +6,11 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [user, setUser] = useState(null);
 
+  const clearInputs = () => {
+    setUsername('');
+    setPassword('');
+  };
+
   const handleUpdateUsername = event => {
     setUsername(event.target.value);
   };
@@ -25,6 +30,7 @@ const Login = () => {
       createdAt: Date.now(),
     };
     setUser(userData);
+    clearInputs();
   };
 
   return (
@@ -34,11 +40,13 @@ const Login = () => {
           type="text"
           placeholder="Username"
           onChange={handleUpdateUsername}
+          value={username}
         />
         <input
           type="password"
           placeholder="Password"
           onChange={handleUpdatePassword}
+          value={password}
         />
         <button type="submit">Submit</button>
       </form>
