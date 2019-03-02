@@ -9,6 +9,11 @@ const styles = {
     loginFormContainer: {
       textAlign: 'center',
     },
+    loginFormBody: {
+      display: 'grid',
+      alignItems: 'center',
+      justifyItems: 'center',
+    },
   },
 };
 
