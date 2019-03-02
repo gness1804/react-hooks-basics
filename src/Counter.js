@@ -11,7 +11,7 @@ const Counter = () => {
   const [isOn, setIsOn] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: null, y: null });
   const [amIOnline, setOnlineStatus] = useState(navigator.onLine);
-  const [location, setLocation] = useState(initialLocation);
+  const [{ latitude, longitude, speed }, setLocation] = useState(initialLocation);
   let mounted = false;
 
   const handleMouseMove = (event) => {
@@ -39,19 +39,25 @@ const Counter = () => {
     });
   };
 
+  const handleGeolocationError = (err) => {
+    throw new Error(`Error with geolocation: ${err.message || JSON.stringify(err)}`);
+  };
+
   useEffect(() => {
     mounted = true;
     document.title = `You have clicked ${count} times.`;
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('online', handleOnlineStatus);
     window.addEventListener('offline', handleOfflineStatus);
-    navigator.geolocation.getCurrentPosition(handleGeolocation);
+    navigator.geolocation.getCurrentPosition(handleGeolocation, handleGeolocationError);
+    const watchId = navigator.geolocation.watchPosition(handleGeolocation, handleGeolocationError);
 
     // clean up function
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('online', handleOnlineStatus);
       window.removeEventListener('offline', handleOfflineStatus);
+      navigator.geolocation.clearWatch(watchId);
       mounted = false;
     };
   }, [count]);
@@ -86,7 +92,7 @@ const Counter = () => {
       <strong>{amIOnline ? 'Yes!' : 'Nope.'}</strong>
 
       <h2>Where Am I?</h2>
-      <p>I am at {location.latitude || 'no latitude'}, {location.longitude || 'no longitude'}, traveling at {location.speed || 'no speed!'}</p>
+      <p>I am at {latitude || 'no latitude'}, {longitude || 'no longitude'}, traveling at {speed || 'no speed!'}</p>
     </>
   );
 };
