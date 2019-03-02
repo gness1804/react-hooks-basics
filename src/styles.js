@@ -5,6 +5,11 @@ const styles = {
       width: '50px',
     },
   },
+  Login: {
+    loginForm: {
+      textAlign: 'center',
+    },
+  },
 };
 
 export default styles;
