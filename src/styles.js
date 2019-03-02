@@ -6,7 +6,7 @@ const styles = {
     },
   },
   Login: {
-    loginForm: {
+    loginFormContainer: {
       textAlign: 'center',
     },
   },

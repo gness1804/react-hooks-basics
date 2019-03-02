@@ -3,7 +3,7 @@ import styles from './styles';
 
 const Login = () => {
   return (
-    <div style={styles.Login.loginForm}>
+    <div style={styles.Login.loginFormContainer}>
       <form action="">
         <input type="text" />
         <input type="text" />
