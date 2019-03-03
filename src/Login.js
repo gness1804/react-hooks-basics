@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import styles from './styles';
 
 const Login = () => {
@@ -34,29 +35,35 @@ const Login = () => {
   };
 
   return (
-    <div style={styles.Login.loginFormContainer}>
-      <form style={styles.Login.loginFormBody} onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Username"
-          onChange={handleUpdateUsername}
-          value={username}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          onChange={handleUpdatePassword}
-          value={password}
-        />
-        <button type="submit">Submit</button>
-      </form>
+    <>
+      <div style={styles.Login.linksContainer}>
+        <Link to="/counter">Counter</Link>
+        <Link to="/register">Register</Link>
+      </div>
+      <div style={styles.Login.loginFormContainer}>
+        <form style={styles.Login.loginFormBody} onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="Username"
+            onChange={handleUpdateUsername}
+            value={username}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            onChange={handleUpdatePassword}
+            value={password}
+          />
+          <button type="submit">Submit</button>
+        </form>
 
-      {user ? (
-        <p>Your username is: {username}.</p>
-      ) : (
-        <p>You are not logged in.</p>
-      )}
-    </div>
+        {user ? (
+          <p>Your username is: {username}.</p>
+        ) : (
+          <p>You are not logged in.</p>
+        )}
+      </div>
+    </>
   );
 };
 
