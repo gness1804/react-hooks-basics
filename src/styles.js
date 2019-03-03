@@ -23,6 +23,16 @@ const styles = {
       justifyItems: 'center',
     },
   },
+  Register: {
+    registerFormContainer: {
+      textAlign: 'center',
+    },
+    registerFormBody: {
+      display: 'grid',
+      alignItems: 'center',
+      justifyItems: 'center',
+    },
+  },
 };
 
 export default styles;
