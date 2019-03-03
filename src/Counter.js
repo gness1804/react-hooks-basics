@@ -11,10 +11,12 @@ const Counter = () => {
   const [isOn, setIsOn] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: null, y: null });
   const [amIOnline, setOnlineStatus] = useState(navigator.onLine);
-  const [{ latitude, longitude, speed }, setLocation] = useState(initialLocation);
+  const [{ latitude, longitude, speed }, setLocation] = useState(
+    initialLocation,
+  );
   let mounted = false;
 
-  const handleMouseMove = (event) => {
+  const handleMouseMove = event => {
     if (mounted) {
       setMousePosition({
         x: event.pageX,
@@ -31,7 +33,7 @@ const Counter = () => {
     setOnlineStatus(false);
   };
 
-  const handleGeolocation = (position) => {
+  const handleGeolocation = position => {
     setLocation({
       latitude: position.coords.latitude,
       longitude: position.coords.longitude,
@@ -39,8 +41,10 @@ const Counter = () => {
     });
   };
 
-  const handleGeolocationError = (err) => {
-    throw new Error(`Error with geolocation: ${err.message || JSON.stringify(err)}`);
+  const handleGeolocationError = err => {
+    throw new Error(
+      `Error with geolocation: ${err.message || JSON.stringify(err)}`,
+    );
   };
 
   useEffect(() => {
@@ -48,8 +52,14 @@ const Counter = () => {
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('online', handleOnlineStatus);
     window.addEventListener('offline', handleOfflineStatus);
-    navigator.geolocation.getCurrentPosition(handleGeolocation, handleGeolocationError);
-    const watchId = navigator.geolocation.watchPosition(handleGeolocation, handleGeolocationError);
+    navigator.geolocation.getCurrentPosition(
+      handleGeolocation,
+      handleGeolocationError,
+    );
+    const watchId = navigator.geolocation.watchPosition(
+      handleGeolocation,
+      handleGeolocationError,
+    );
 
     // clean up function
     return () => {
@@ -81,10 +91,14 @@ const Counter = () => {
 
       <h2>Toggle Light</h2>
       <img
-          onClick={toggleLight}
-          style={styles.Counter.lightbulbImage}
-          alt="Flashlight"
-          src={isOn ? 'https://icon.now.sh/highlight/fd0' : 'https://icon.now.sh/highlight/aaa'}
+        onClick={toggleLight}
+        style={styles.Counter.lightbulbImage}
+        alt="Flashlight"
+        src={
+          isOn
+            ? 'https://icon.now.sh/highlight/fd0'
+            : 'https://icon.now.sh/highlight/aaa'
+        }
       />
 
       <h2>Mouse Position</h2>
@@ -95,7 +109,10 @@ const Counter = () => {
       <strong>{amIOnline ? 'Yes!' : 'Nope.'}</strong>
 
       <h2>Where Am I?</h2>
-      <p>I am at {latitude || 'no latitude'}, {longitude || 'no longitude'}, traveling at {speed || 'no speed!'}</p>
+      <p>
+        I am at {latitude || 'no latitude'}, {longitude || 'no longitude'},
+        traveling at {speed || 'no speed!'}
+      </p>
     </>
   );
 };
